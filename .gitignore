@@ -3,6 +3,12 @@
 /csv/*
 /results/*
 
+#but keep the folders
+!/.supplimental/.gitkeep
+!/csv/.gitkeep
+!/results/.gitkeep
+
+
 #idea
 .idea
 
