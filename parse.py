@@ -21,9 +21,13 @@ software_list_unique    = []
 txt_results_filename    = "software_list-" + todaycurrent_time + ".txt"
 txt_results_filepath    = os.path.join(results_path, txt_results_filename)
 
+software_list_uniqueoutput_filename = "software_list_uniqueoutput_-" + todaycurrent_time + ".csv"
+software_list_uniqueoutput_file     = os.path.join(results_path, software_list_uniqueoutput_filename)
+
 #create new csv fle
 output_file = open(csv_results_filepath, "w", newline='')
 writer      = csv.writer(output_file, delimiter=',')
+
 writer.writerow(["software_name", "software_version", "hostname", "repository"]) #writes the headder
 
 for root, dirs, files in os.walk(csv_path):
@@ -34,7 +38,7 @@ for root, dirs, files in os.walk(csv_path):
                 reader = csv.DictReader(csv_file)
                 for row in reader:
                     if row['Plugin'] == "20811":
-                        #print(row['Plugin'], " / ", row['NetBIOS Name'], row['Plugin Text'])
+                        #get values from csv row
                         hostname    = row['NetBIOS Name']
                         plugin_text = row['Plugin Text']
                         repository  = row['Repository']
@@ -60,7 +64,7 @@ for root, dirs, files in os.walk(csv_path):
 
                             writer.writerow([software_name, software_version, hostname, repository])
 
-                            swNameVersion = software_name + " @ Version: " + software_version
+                            swNameVersion = software_name + "," + software_version
                             software_list_all += [swNameVersion]
 
 
@@ -71,8 +75,15 @@ software_list_all.sort()
 software_list_unique = list(set(software_list_all))
 software_list_unique.sort()
 
-#write the software list to file
+#write the software list to txt file
 with open(txt_results_filepath, 'x') as txt_output_file:
     for software in software_list_unique:
            txt_output_file.write('%s\n' % software)
 
+
+software_list_uniqueoutput_file = open(csv_results_filepath, "w", newline='')
+software_list_unique_writer      = csv.writer(software_list_uniqueoutput_file, delimiter=',')
+
+software_list_unique_writer.writerow(["software_name", "software_version"]) #writes the headder
+for line in software_list_unique:
+    software_list_unique_writer.writerow(line)
