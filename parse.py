@@ -34,7 +34,7 @@ for root, dirs, files in os.walk(csv_path):
                 reader = csv.DictReader(csv_file)
                 for row in reader:
                     if row['Plugin'] == "20811":
-                        #print(row['Plugin'], " / ", row['NetBIOS Name'], row['Plugin Text'])
+                        print(row['Plugin'], " / ", row['NetBIOS Name'], row['Plugin Text'])
                         hostname    = row['NetBIOS Name']
                         plugin_text = row['Plugin Text']
                         repository  = row['Repository']
